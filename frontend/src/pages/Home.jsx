@@ -166,36 +166,6 @@ const Home = () => {
         </div>
 
         {/* Products */}
-        {/* <div className="flex flex-col md:flex-row items-center justify-center md:justify-between">
-          {products.map((product) => (
-            <div key={product._id}>
-              <div className="flex h-120 w-56 md:w-90 rounded-xl items-center md:items-startrounded-xl bg-slate-700 justify-center md:justify-between">
-                <div className="flex flex-col w-full  ">
-                  <div className="flex flex-col items-center w-full ">
-                    <img
-                      src={product.image.url}
-                      alt=""
-                      className="w-52 h-64  bg-red-400 "
-                    />
-                  </div>
-                  <div className="flex flex-col gap-1 px-4  mt-2">
-                    <p className="text-teal-400">{}h</p>
-                    <h1 className="font-bold text-xl">{product.title}</h1>
-                    <h3>RATINGS</h3>
-                  </div>
-                  <div className="flex justify-between p-4 ">
-                    <h1>{product.price}</h1>
-                    <Link className="bg-teal-500 p-2 rounded-xl hover:bg-teal-600">
-                      <LuShoppingCart className="text-2xl text-black" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div> */}
-
-        {/* Products */}
         <div className="grid grid-cols-1 mx-4  sm:grid-cols-2 sm:mx-0 lg:grid-cols-3 gap-6">
           {products.map((product) => (
             <div
