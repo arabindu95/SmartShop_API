@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { MyContext } from "./../context/createContext";
 
 import { FaArrowRight } from "react-icons/fa6";
@@ -10,9 +10,21 @@ import { TbArrowZigZag } from "react-icons/tb";
 import { BsLightningCharge } from "react-icons/bs";
 import { GiCondorEmblem } from "react-icons/gi";
 import { LuShoppingCart } from "react-icons/lu";
+import axios from "axios";
 
 const Home = () => {
   const { theme } = useContext(MyContext);
+  const [products, setproducts] = useState([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const results = await axios.get(
+        "http://localhost:5000/smartshop/api/product/getproducts",
+        { withCredentials: true }
+      );
+      setproducts(results.data.products);
+    };
+    fetchProducts();
+  }, []);
   return (
     <div className="min-h-screen flex flex-col justify-center mt-16">
       {/* ----------------Hero Section---------------- */}
@@ -154,27 +166,67 @@ const Home = () => {
         </div>
 
         {/* Products */}
-        <div className="flex justify-center md:justify-between">
-          <div className="flex h-120 w-56 md:w-90 rounded-xl items-center md:items-startrounded-xl bg-slate-700 justify-center md:justify-between">
-            <div className="flex flex-col w-full  ">
-              <div className="flex flex-col items-center w-full">
-                <img src="" alt="" className="w-52 h-64 bg-red-400 " />
+        {/* <div className="flex flex-col md:flex-row items-center justify-center md:justify-between">
+          {products.map((product) => (
+            <div key={product._id}>
+              <div className="flex h-120 w-56 md:w-90 rounded-xl items-center md:items-startrounded-xl bg-slate-700 justify-center md:justify-between">
+                <div className="flex flex-col w-full  ">
+                  <div className="flex flex-col items-center w-full ">
+                    <img
+                      src={product.image.url}
+                      alt=""
+                      className="w-52 h-64  bg-red-400 "
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1 px-4  mt-2">
+                    <p className="text-teal-400">{}h</p>
+                    <h1 className="font-bold text-xl">{product.title}</h1>
+                    <h3>RATINGS</h3>
+                  </div>
+                  <div className="flex justify-between p-4 ">
+                    <h1>{product.price}</h1>
+                    <Link className="bg-teal-500 p-2 rounded-xl hover:bg-teal-600">
+                      <LuShoppingCart className="text-2xl text-black" />
+                    </Link>
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col gap-1 px-4  mt-2">
-                <p className="text-teal-400">Audio</p>
-                <h1 className="font-bold text-xl">
-                  Bluetooth Speaker Waterproof
-                </h1>
-                <h3>RATINGS</h3>
+            </div>
+          ))}
+        </div> */}
+
+        {/* Products */}
+        <div className="grid grid-cols-1 mx-4  sm:grid-cols-2 sm:mx-0 lg:grid-cols-3 gap-6">
+          {products.map((product) => (
+            <div
+              key={product._id}
+              className="bg-slate-700 rounded-xl overflow-hidden flex flex-col"
+            >
+              {/* Image */}
+              <div className="w-full h-96">
+                <img
+                  src={product.image.url}
+                  alt={product.title}
+                  className="w-full max-h-full object-cover"
+                />
               </div>
-              <div className="flex justify-between p-4 ">
-                <h1>price</h1>
+
+              {/* Product Info */}
+              <div className="p-4 flex flex-col gap-2">
+                <p className="text-teal-400">{/* category or empty */}</p>
+                <h2 className="font-bold text-xl">{product.title}</h2>
+                <p>RATINGS</p>
+              </div>
+
+              {/* Price + Cart */}
+              <div className="flex justify-between items-center p-4 border-t border-slate-600">
+                <p className="font-semibold">₹{product.price}</p>
                 <Link className="bg-teal-500 p-2 rounded-xl hover:bg-teal-600">
                   <LuShoppingCart className="text-2xl text-black" />
                 </Link>
               </div>
             </div>
-          </div>
+          ))}
         </div>
 
         {/* Mobile View All Button - only on mobile */}

@@ -1,12 +1,23 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import cors from "cors";
 
 import productRoute from "./routes/product.route.js";
 import userRoute from "./routes/user.route.js";
 
 const app = express();
 dotenv.config();
+
+//cors
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 //middleware
 app.use(express.json());
