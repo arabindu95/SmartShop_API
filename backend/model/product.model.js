@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const ProductSchema = new mongoose.Schema({
-  titile: {
+  title: {
     type: String,
     required: true,
   },
@@ -13,22 +13,8 @@ const ProductSchema = new mongoose.Schema({
     required: true,
   },
   image: {
-    image: {
-      url: {
-        type: String,
-        required: true,
-      },
-      public_id: {
-        type: String,
-        required: true,
-      },
-    },
-  },
-  creatorId: {
-    creatorId: {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
-    },
+    url: { type: String, required: true },
+    public_id: { type: String, required: true },
   },
 });
 
