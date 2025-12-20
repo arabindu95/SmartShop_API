@@ -53,7 +53,7 @@ const Header = () => {
               Products
             </NavLink>
             <NavLink
-              to="/aipicks"
+              to="/recommendations"
               className={({ isActive }) =>
                 isActive ? "text-blue-300" : " hover:text-blue-300"
               }
@@ -138,7 +138,7 @@ const Header = () => {
         </NavLink>
 
         <NavLink
-          to="/aipicks"
+          to="/recommendations"
           className="hover:text-blue-300 hover:bg-slate-700 p-2 rounded-lg"
           onClick={() => setOpen(false)}
         >

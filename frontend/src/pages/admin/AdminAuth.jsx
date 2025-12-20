@@ -8,15 +8,14 @@ import { FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { GiCondorEmblem } from "react-icons/gi";
 import axios from "axios";
-import { MyContext } from "./../context/createContext";
+import { MyContext } from "../../context/createContext";
 
-export const Auth = () => {
+const AdminAuth = () => {
   const [mode, setMode] = useState("login");
   const [email, setEmail] = useState("");
   const [fullName, setfullName] = useState("");
   const [password, setPasdsword] = useState("");
   const { isLoggedin, SetIsLoggedin } = useContext(MyContext);
-
   const navigate = useNavigate();
 
   //login function
@@ -24,7 +23,7 @@ export const Auth = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/smartshop/api/user/login",
+        "http://localhost:5000/smartshop/api/admin/login",
         { email, password },
         {
           withCredentials: true,
@@ -32,7 +31,7 @@ export const Auth = () => {
         }
       );
       console.log("loginData:=>", response.data);
-      navigate("/products");
+      navigate("/admin/upload");
       SetIsLoggedin(true);
     } catch (error) {
       console.log(error);
@@ -44,7 +43,7 @@ export const Auth = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/smartshop/api/user/signup",
+        "http://localhost:5000/smartshop/api/admin/signup",
         { fullName, email, password },
         {
           withCredentials: true,
@@ -54,7 +53,7 @@ export const Auth = () => {
         }
       );
       console.log("signup data =>", response.data);
-      navigate("/products");
+      navigate("/admin/upload");
     } catch (error) {
       console.log(error?.response.data || error.message);
     }
@@ -64,7 +63,7 @@ export const Auth = () => {
   const handleLogout = async () => {
     try {
       const result = await axios.post(
-        "http://localhost:5000/smartshop/api/user/logout",
+        "http://localhost:5000/smartshop/api/admin/logout",
         {},
         { withCredentials: true }
       );
@@ -72,6 +71,7 @@ export const Auth = () => {
         console.log(result.data.message);
       }
       SetIsLoggedin(false);
+      navigate("/admin");
     } catch (error) {
       console.log(error);
     }
@@ -93,24 +93,26 @@ export const Auth = () => {
             </button>
           </div>
         ) : (
-          <div>
+          <div className="mb-10">
             <div className="flex flex-col justify-center items-center my-10 gap-2">
               <h1 className="text-3xl font-semibold">
-                {mode === "login" ? "Welcome Back" : "Create Account"}
+                {mode === "login"
+                  ? "Welcome To Admin Login"
+                  : "Create Admin Account "}
               </h1>
               <p className="text-gray-400">
                 {mode === "login"
-                  ? "Sign in to access your account"
-                  : "Join SmartShop for personalized shopping"}
+                  ? "Sign in to access your Admin account"
+                  : "Join SmartShop for Selling your Products"}
               </p>
             </div>
 
-            <div className="flex-col justify-center items-center p-10 rounded-xl shadow-lg shadow-blue-300 border border-slate-700 w-[450px]">
+            <div className="flex-col justify-center items-center p-10 rounded-xl shadow-lg shadow-blue-200 border border-slate-100 w-[450px]">
               <div className="flex gap-4 mb-6 w-full items-center justify-center">
                 <button
                   onClick={() => setMode("login")}
                   className={`px-4 py-2 rounded-lg font-medium w-48 ${
-                    mode === "login" ? "bg-blue-800 text-white" : "bg-slate-800"
+                    mode === "login" ? "bg-blue-800 text-white" : "bg-slate-200"
                   }`}
                 >
                   Login
@@ -121,7 +123,7 @@ export const Auth = () => {
                   className={`px-4 py-2 rounded-lg font-medium w-48 ${
                     mode === "signup"
                       ? "bg-blue-800 text-white"
-                      : "bg-slate-800 "
+                      : "bg-slate-200 "
                   }`}
                 >
                   Signup
@@ -143,7 +145,7 @@ export const Auth = () => {
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full p-3 pl-10 rounded-md bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 "
+                        className="w-full p-3 pl-10 rounded-md bg-slate-200 border border-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 "
                         placeholder="Arabindu@email.com"
                         required
                       />
@@ -159,7 +161,7 @@ export const Auth = () => {
                         id="password"
                         value={password}
                         onChange={(e) => setPasdsword(e.target.value)}
-                        className="w-full p-3 pl-10 rounded-md bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 "
+                        className="w-full p-3 pl-10 rounded-md bg-slate-200 border border-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 "
                         placeholder="* * * * * * * *"
                         required
                       />
@@ -169,7 +171,7 @@ export const Auth = () => {
                     <div className="mt-8">
                       <button
                         type="submit"
-                        className="w-full p-3 rounded-md bg-green-800 border border-slate-700 focus:outline-none hover:bg-green-700 duration-300 "
+                        className="w-full p-3 rounded-md bg-green-600 border focus:outline-none hover:bg-green-700 duration-300 text-white"
                       >
                         Sign in
                       </button>
@@ -183,7 +185,7 @@ export const Auth = () => {
 
                     <div className="flex gap-4 mt-8 w-full items-center justify-center">
                       <button
-                        className="relative px-4 py-2  h-12 rounded-lg font-medium w-48 bg-slate-800 hover:bg-slate-700 duration-300"
+                        className="relative px-4 py-2  h-12 rounded-lg font-medium w-48 bg-slate-200 hover:bg-slate-500 duration-300"
                         onClick={() => {}}
                       >
                         Google
@@ -191,7 +193,7 @@ export const Auth = () => {
                       <FcGoogle className="absolute mt-1 mr-72 text-2xl" />
 
                       <button
-                        className="relative px-4 py-2 h-12 rounded-lg font-medium w-48  bg-slate-800 hover:bg-slate-700 duration-300"
+                        className="relative px-4 py-2 h-12 rounded-lg font-medium w-48  bg-slate-200 hover:bg-slate-500 duration-300"
                         onClick={() => {}}
                       >
                         Github
@@ -213,7 +215,7 @@ export const Auth = () => {
                         id="fullName"
                         value={fullName}
                         onChange={(e) => setfullName(e.target.value)}
-                        className="w-full p-3 pl-10 rounded-md bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 "
+                        className="w-full p-3 pl-10 rounded-md bg-slate-200 border border-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-300 "
                         placeholder="Arabindu Chakraborty"
                         required
                       />
@@ -229,7 +231,7 @@ export const Auth = () => {
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full p-3 pl-10 rounded-md bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 "
+                        className="w-full p-3 pl-10 rounded-md bg-slate-200 border border-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-300 "
                         placeholder="Arabindu@email.com"
                         required
                       />
@@ -245,7 +247,7 @@ export const Auth = () => {
                         id="password"
                         value={password}
                         onChange={(e) => setPasdsword(e.target.value)}
-                        className="w-full p-3 pl-10 rounded-md bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 "
+                        className="w-full p-3 pl-10 rounded-md bg-slate-200 border border-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-300 "
                         placeholder="* * * * * * * *"
                         required
                       />
@@ -255,7 +257,7 @@ export const Auth = () => {
                     <div className="mt-8 ">
                       <button
                         type="submit"
-                        className="w-full p-3  rounded-md bg-green-800 border border-slate-700 focus:outline-none hover:bg-green-700 duration-300 "
+                        className="w-full p-3  rounded-md bg-green-600 focus:outline-none hover:bg-green-700 duration-300 "
                       >
                         Create Account
                       </button>
@@ -269,7 +271,7 @@ export const Auth = () => {
 
                     <div className="flex gap-4 mt-8 w-full items-center justify-center">
                       <button
-                        className="relative px-4 py-2  h-12 rounded-lg font-medium w-48 bg-slate-800 hover:bg-slate-700 duration-300"
+                        className="relative px-4 py-2  h-12 rounded-lg font-medium w-48 bg-slate-200 hover:bg-slate-500 duration-300"
                         onClick={() => {}}
                       >
                         Google
@@ -277,7 +279,7 @@ export const Auth = () => {
                       <FcGoogle className="absolute mt-1 mr-72 text-2xl" />
 
                       <button
-                        className="relative px-4 py-2 h-12 rounded-lg font-medium w-48  bg-slate-800 hover:bg-slate-700 duration-300"
+                        className="relative px-4 py-2 h-12 rounded-lg font-medium w-48  bg-slate-200 hover:bg-slate-500 duration-300"
                         onClick={() => {}}
                       >
                         Github
@@ -294,3 +296,5 @@ export const Auth = () => {
     </div>
   );
 };
+
+export default AdminAuth;

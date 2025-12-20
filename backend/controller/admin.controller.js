@@ -1,4 +1,4 @@
-import { User } from "../model/user.model.js";
+import { Admin } from "./../model/admin.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -10,23 +10,30 @@ export const signup = async (req, res) => {
   const hashPassword = await bcrypt.hash(password, 10);
 
   try {
+    // validation
+    if (!fullName || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        errors: "All fields are required",
+      });
+    }
     // cheacking for user exist
-    const existingUser = await User.findOne({ email: email });
+    const existingUser = await Admin.findOne({ email: email });
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        errors: "user already exist",
+        errors: "Admin already exist",
       });
     }
 
     //save user with Hashpassword
     const payload = { fullName, email, password: hashPassword };
-    const newUser = new User(payload);
-    await newUser.save();
-    res.status(200).json({
+    const newAdmin = new Admin(payload);
+    await newAdmin.save();
+    res.status(201).json({
       success: true,
       message: " signup successfully",
-      newUser,
+      newAdmin,
     });
   } catch (error) {
     res.status(500).json({
@@ -50,7 +57,7 @@ export const login = async (req, res) => {
     }
 
     //cheack user exists
-    const user = await User.findOne({ email: email });
+    const user = await Admin.findOne({ email: email });
     if (!user) {
       return res.status(400).json({
         success: false,

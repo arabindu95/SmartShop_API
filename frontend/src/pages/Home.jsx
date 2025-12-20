@@ -25,6 +25,7 @@ const Home = () => {
     };
     fetchProducts();
   }, []);
+
   return (
     <div className="min-h-screen flex flex-col justify-center mt-16">
       {/* ----------------Hero Section---------------- */}

@@ -58,8 +58,8 @@ const Recommendations = () => {
 
       {/*---------------------- Filter Buttons ------------------------- */}
       <section>
-        <div className="flex justify-between p-6">
-          <div className="flex gap-6">
+        <div className="flex lg:justify-between p-6">
+          <div className="flex flex-wrap gap-6">
             <div className="flex">
               <NavLink
                 to="/"
@@ -171,7 +171,7 @@ const Recommendations = () => {
             </div>
           </div>
 
-          <div className="flex mt-10 gap-6">
+          <div className="flex flex-col md:flex-row mt-10 gap-6">
             <div className="flex flex-col p-4 rounded-lg gap-3 bg-slate-800 shadow-md shadow-teal-400 hover:bg-slate-900 hover:shadow-gray-600">
               <h1 className="font-semibold">Smart Matching</h1>
               <p className="text-gray-400 text-sm">

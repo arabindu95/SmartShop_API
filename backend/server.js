@@ -2,9 +2,11 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import productRoute from "./routes/product.route.js";
 import userRoute from "./routes/user.route.js";
+import adminRoute from "./routes/admin.route.js";
 
 const app = express();
 dotenv.config();
@@ -21,6 +23,7 @@ app.use(
 
 //middleware
 app.use(express.json());
+app.use(cookieParser());
 
 const PORT = process.env.PORT;
 const DB_URI = process.env.MONGODB_URI;
@@ -33,11 +36,12 @@ try {
 }
 
 app.get("/", (req, res) => {
-  res.send("successfully created server by ");
+  res.send("successfully created server by Arabindu");
 });
 
 app.use("/smartshop/api/product", productRoute);
 app.use("/smartshop/api/user", userRoute);
+app.use("/smartshop/api/admin", adminRoute);
 
 app.listen(PORT, () => {
   console.log(`server is running on port http://localhost:${PORT}`);
