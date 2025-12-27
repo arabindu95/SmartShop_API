@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import productRoute from "./routes/product.route.js";
 import userRoute from "./routes/user.route.js";
 import adminRoute from "./routes/admin.route.js";
+import cartRoute from "./routes/cart.route.js";
 
 const app = express();
 dotenv.config();
@@ -41,6 +42,7 @@ app.get("/", (req, res) => {
 
 app.use("/smartshop/api/product", productRoute);
 app.use("/smartshop/api/user", userRoute);
+app.use("/smartshop/api/cart", cartRoute);
 app.use("/smartshop/api/admin", adminRoute);
 
 app.listen(PORT, () => {

@@ -16,6 +16,24 @@ const Products = () => {
     };
     fetchProducts();
   }, []);
+
+  //addToCart
+  const addToCart = async (productId) => {
+    try {
+      await axios.post(
+        "http://localhost:5000/smartshop/api/cart/add",
+        {
+          productId: productId,
+          quantity: 1,
+        },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      console.log(error);
+      alert("Please login first");
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 mx-4 mt-4 sm:grid-cols-3 sm:mx-0 lg:grid-cols-4 gap-6">
       {products.map((product) => (
@@ -46,9 +64,12 @@ const Products = () => {
             <p className="font-bold text-2xl text-teal-500">
               ₹ {product.price}
             </p>
-            <Link className="bg-teal-500 p-2 rounded-xl hover:bg-teal-600">
+            <button
+              className="bg-teal-500 p-2 rounded-xl hover:bg-teal-600"
+              onClick={() => addToCart(product._id)}
+            >
               <LuShoppingCart className="text-2xl text-black" />
-            </Link>
+            </button>
           </div>
         </div>
       ))}
