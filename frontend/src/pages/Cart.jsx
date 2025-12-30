@@ -3,13 +3,14 @@ import { RiShoppingBag3Line, RiDeleteBin6Line } from "react-icons/ri";
 
 import { FiMinus, FiPlus } from "react-icons/fi";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const navigate = useNavigate();
 
   const fetchCart = async () => {
     try {
@@ -174,7 +175,10 @@ const Cart = () => {
                 <h2 className="text-xl font-semibold">TotalAmount:</h2>
                 <h2 className="text-xl font-semibold"> ₹ {finalTaxAmount}</h2>
               </div>
-              <button className="bg-teal-700 p-4 rounded-lg">
+              <button
+                className="bg-teal-700 p-4 rounded-lg"
+                onClick={() => navigate("/Cheackout")}
+              >
                 Proceed to CheackOut
               </button>
             </div>

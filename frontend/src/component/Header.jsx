@@ -14,6 +14,7 @@ import { GiCondorEmblem } from "react-icons/gi";
 const Header = () => {
   const { theme, toggleTheme } = useContext(MyContext);
   const [open, setOpen] = useState(false);
+  const { search, setSearch } = useContext(MyContext);
 
   return (
     <div className="sticky top-0 z-50 backdrop-blur-2xl border-b border-slate-700  ">
@@ -27,6 +28,8 @@ const Header = () => {
         <div className="hidden md:flex-3 relative md:block ">
           <input
             type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="Search Products...."
             className="w-full h-10 pl-8 rounded-xl border border-slate-700 focus:border-2 focus:border-slate-700 outline-none  text-white"
           />

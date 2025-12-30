@@ -1,21 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LuShoppingCart } from "react-icons/lu";
 import axios from "axios";
+import { MyContext } from "../context/createContext";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const { search } = useContext(MyContext);
+
   useEffect(() => {
     const fetchProducts = async () => {
       const results = await axios.get(
-        "http://localhost:5000/smartshop/api/product/getproducts",
+        `http://localhost:5000/smartshop/api/product/getproducts?search=${search}`,
         { withCredentials: true }
       );
       setProducts(results.data.products);
     };
     fetchProducts();
-  }, []);
+  }, [search]);
 
   //addToCart
   const addToCart = async (productId) => {

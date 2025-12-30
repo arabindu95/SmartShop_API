@@ -44,7 +44,12 @@ export const createProduct = async (req, res) => {
 //***********************get Products****************************/
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find({});
+    const search = req.query.search || "";
+    let filter = {};
+    if (search) {
+      filter.title = { $regex: search, $options: "i" };
+    }
+    const products = await Product.find(filter);
     res.status(200).json({ products });
   } catch (error) {
     res.status(500).json({ errors: "error in get courses", error });

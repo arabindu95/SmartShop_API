@@ -205,7 +205,7 @@ export const Auth = () => {
                 <form onSubmit={handleSubmit} className="text-center">
                   <div>
                     <div className="relative">
-                      <label htmlFor="email" className="flex mb-2">
+                      <label htmlFor="fullname" className="flex mb-2">
                         Full Name
                       </label>
                       <input
@@ -237,7 +237,7 @@ export const Auth = () => {
                     </div>
 
                     <div className="relative mt-3">
-                      <label htmlFor="email" className="flex mb-2">
+                      <label htmlFor="password" className="flex mb-2">
                         Password
                       </label>
                       <input

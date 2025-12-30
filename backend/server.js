@@ -8,6 +8,7 @@ import productRoute from "./routes/product.route.js";
 import userRoute from "./routes/user.route.js";
 import adminRoute from "./routes/admin.route.js";
 import cartRoute from "./routes/cart.route.js";
+import orderRoute from "./routes/order.route.js";
 
 const app = express();
 dotenv.config();
@@ -44,6 +45,7 @@ app.use("/smartshop/api/product", productRoute);
 app.use("/smartshop/api/user", userRoute);
 app.use("/smartshop/api/cart", cartRoute);
 app.use("/smartshop/api/admin", adminRoute);
+app.use("/smartshop/api/order", orderRoute);
 
 app.listen(PORT, () => {
   console.log(`server is running on port http://localhost:${PORT}`);
