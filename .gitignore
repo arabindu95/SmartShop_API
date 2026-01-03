@@ -7,3 +7,5 @@ frontend/dist/
 frontend/build/
 
 backend/dist/
+.env
+.env.*
