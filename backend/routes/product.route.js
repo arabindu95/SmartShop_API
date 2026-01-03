@@ -6,11 +6,11 @@ import {
   updateProducts,
 } from "../controller/product.controller.js";
 import { upload } from "./../middlewares/multer.js";
-import userMiddleware from "../middlewares/user.midl.js";
+// import userMiddleware from "../middlewares/user.midl.js";
 
 const router = express.Router();
 
-router.get("/getproducts", userMiddleware, getProducts);
+router.get("/getproducts", getProducts);
 
 //for admin
 router.post("/create", upload.single("image"), createProduct);
