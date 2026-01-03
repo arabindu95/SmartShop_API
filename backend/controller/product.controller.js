@@ -45,11 +45,14 @@ export const createProduct = async (req, res) => {
 export const getProducts = async (req, res) => {
   try {
     const search = req.query.search || "";
+    console.log("Search query:", search);
     let filter = {};
     if (search.trim() !== "") {
       filter.title = { $regex: search, $options: "i" };
     }
+    console.log("Filter:", filter);
     const products = await Product.find(filter);
+    console.log("Products found:", products.length);
     res.status(200).json({ products });
   } catch (error) {
     console.error("Error in getProducts:", error);
