@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { BACKEND_URI } from "../../config";
 
 const AdminUploadProducts = () => {
   const [title, setTitle] = useState("");
@@ -31,7 +32,7 @@ const AdminUploadProducts = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/smartshop/api/product/create",
+        `${BACKEND_URI}/smartshop/api/product/create`,
         formData,
         {
           headers: {

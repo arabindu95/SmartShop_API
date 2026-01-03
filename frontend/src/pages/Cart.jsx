@@ -6,6 +6,7 @@ import { FiMinus, FiPlus } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { BACKEND_URI } from "../config";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -14,10 +15,9 @@ const Cart = () => {
 
   const fetchCart = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:5000/smartshop/api/cart/getcart",
-        { withCredentials: true }
-      );
+      const res = await axios.get(`${BACKEND_URI}/smartshop/api/cart/getcart`, {
+        withCredentials: true,
+      });
       console.log(res.data);
       setCartItems(res.data.cart.items || []);
       setTotalAmount(res.data.totalAmount);
@@ -35,7 +35,7 @@ const Cart = () => {
   const removeFromCart = async (productId) => {
     try {
       await axios.delete(
-        `http://localhost:5000/smartshop/api/cart/remove/${productId}`,
+        `${BACKEND_URI}/smartshop/api/cart/remove/${productId}`,
         { withCredentials: true }
       );
       fetchCart();
@@ -48,7 +48,7 @@ const Cart = () => {
   const increamntQuantity = async (productId) => {
     try {
       await axios.post(
-        "http://localhost:5000/smartshop/api/cart/add",
+        `${BACKEND_URI}/smartshop/api/cart/add`,
         { productId, quantity: 1 },
         { withCredentials: true }
       );
@@ -62,7 +62,7 @@ const Cart = () => {
   const decrementQuantuty = async (productId) => {
     try {
       await axios.delete(
-        `http://localhost:5000/smartshop/api/cart/remove/${productId}`,
+        `${BACKEND_URI}/smartshop/api/cart/remove/${productId}`,
         { withCredentials: true }
       );
       fetchCart();
@@ -176,7 +176,7 @@ const Cart = () => {
                 <h2 className="text-xl font-semibold"> ₹ {finalTaxAmount}</h2>
               </div>
               <button
-                className="bg-teal-700 p-4 rounded-lg"
+                className="bg-teal-700 p-4 rounded-lg hover:bg-teal-600"
                 onClick={() => navigate("/Cheackout")}
               >
                 Proceed to CheackOut

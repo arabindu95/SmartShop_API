@@ -11,6 +11,7 @@ import { BsLightningCharge } from "react-icons/bs";
 import { GiCondorEmblem } from "react-icons/gi";
 import { LuShoppingCart } from "react-icons/lu";
 import axios from "axios";
+import { BACKEND_URI } from "../config";
 
 const Home = () => {
   const { theme } = useContext(MyContext);
@@ -18,7 +19,7 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       const results = await axios.get(
-        "http://localhost:5000/smartshop/api/product/getproducts",
+        `${BACKEND_URI}/smartshop/api/product/getproducts`,
         { withCredentials: true }
       );
       setproducts(results.data.products);

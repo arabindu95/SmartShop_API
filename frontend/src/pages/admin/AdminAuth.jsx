@@ -9,6 +9,7 @@ import { FcGoogle } from "react-icons/fc";
 import { GiCondorEmblem } from "react-icons/gi";
 import axios from "axios";
 import { MyContext } from "../../context/createContext";
+import { BACKEND_URI } from "../../config";
 
 const AdminAuth = () => {
   const [mode, setMode] = useState("login");
@@ -23,7 +24,7 @@ const AdminAuth = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/smartshop/api/admin/login",
+        `${BACKEND_URI}/smartshop/api/admin/login`,
         { email, password },
         {
           withCredentials: true,
@@ -43,7 +44,7 @@ const AdminAuth = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/smartshop/api/admin/signup",
+        `${BACKEND_URI}/smartshop/api/admin/signup`,
         { fullName, email, password },
         {
           withCredentials: true,
@@ -63,7 +64,7 @@ const AdminAuth = () => {
   const handleLogout = async () => {
     try {
       const result = await axios.post(
-        "http://localhost:5000/smartshop/api/admin/logout",
+        `${BACKEND_URI}/smartshop/api/admin/logout`,
         {},
         { withCredentials: true }
       );

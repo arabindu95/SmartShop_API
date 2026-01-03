@@ -4,27 +4,32 @@ import { Link } from "react-router-dom";
 import { LuShoppingCart } from "react-icons/lu";
 import axios from "axios";
 import { MyContext } from "../context/createContext";
-
+import { BACKEND_URI } from "../config";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const { search } = useContext(MyContext);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const results = await axios.get(
-        `http://localhost:5000/smartshop/api/product/getproducts?search=${search}`,
-        { withCredentials: true }
-      );
-      setProducts(results.data.products);
-    };
-    fetchProducts();
+    const timer = setTimeout(() => {
+      axios
+        .get(
+          `${BACKEND_URI}/smartshop/api/product/getproducts?search=${search}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          setProducts(res.data.products);
+        });
+    }, 1000);
+    return () => clearTimeout(timer);
   }, [search]);
 
   //addToCart
   const addToCart = async (productId) => {
     try {
       await axios.post(
-        "http://localhost:5000/smartshop/api/cart/add",
+        `${BACKEND_URI}/smartshop/api/cart/add`,
         {
           productId: productId,
           quantity: 1,

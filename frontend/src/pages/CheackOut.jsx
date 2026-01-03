@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { FaRegUser } from "react-icons/fa6";
 import { IoLocationSharp } from "react-icons/io5";
+import { BACKEND_URI } from "../config";
 const CheackOut = () => {
   const [address, setAddress] = useState({
     fullname: "",
@@ -20,10 +21,9 @@ const CheackOut = () => {
   //fetchCart items
   const fetchCart = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:5000/smartshop/api/cart/getcart",
-        { withCredentials: true }
-      );
+      const res = await axios.get(`${BACKEND_URI}/smartshop/api/cart/getcart`, {
+        withCredentials: true,
+      });
       setCartItems(res.data.cart.items || []);
       setTotalAmount(res.data.totalAmount);
     } catch (error) {
@@ -52,7 +52,7 @@ const CheackOut = () => {
         return;
       }
       const res = await axios.post(
-        "http://localhost:5000/smartshop/api/order/place",
+        `${BACKEND_URI}/smartshop/api/order/place`,
         {
           address,
           items: cartItems,
@@ -247,7 +247,7 @@ const CheackOut = () => {
               </h1>
             </div>
             <button
-              className="bg-teal-700 p-4 rounded-lg w-full my-4"
+              className="bg-teal-700 p-4 rounded-lg w-full my-4 hover:bg-teal-600"
               onClick={placeOrder}
             >
               Place Order . ₹{totalTaxAmount}
