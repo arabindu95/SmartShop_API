@@ -10,6 +10,7 @@ const Products = () => {
   const { search } = useContext(MyContext);
 
   useEffect(() => {
+    console.log(BACKEND_URI);
     const timer = setTimeout(() => {
       axios
         .get(
