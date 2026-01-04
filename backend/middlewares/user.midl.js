@@ -1,7 +1,12 @@
 import jwt from "jsonwebtoken";
 
 function userMiddleware(req, res, next) {
-  const token = req.cookies.jwt;
+  let token = req.cookies.jwt;
+
+  //if cookie missing try to headers
+  if (!token && req.headers.authorization) {
+    token = req.headers.authorization.split(" ")[1];
+  }
   if (!token) {
     return res.status(400).json({ message: "token missing in cookie" });
   }

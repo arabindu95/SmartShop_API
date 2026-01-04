@@ -32,6 +32,8 @@ export const Auth = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
+      const token = response.data.token;
+      localStorage.setItem("token", token);
       console.log("loginData:=>", response.data);
       navigate("/products");
       SetIsLoggedin(true);

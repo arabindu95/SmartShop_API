@@ -35,7 +35,12 @@ const Products = () => {
           productId: productId,
           quantity: 1,
         },
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
       );
     } catch (error) {
       console.log(error);
