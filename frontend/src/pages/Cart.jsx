@@ -39,7 +39,12 @@ const Cart = () => {
     try {
       await axios.delete(
         `${BACKEND_URI}/smartshop/api/cart/remove/${productId}`,
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
       );
       fetchCart();
     } catch (error) {
@@ -53,7 +58,12 @@ const Cart = () => {
       await axios.post(
         `${BACKEND_URI}/smartshop/api/cart/add`,
         { productId, quantity: 1 },
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
       );
       fetchCart();
     } catch (error) {
@@ -66,7 +76,12 @@ const Cart = () => {
     try {
       await axios.delete(
         `${BACKEND_URI}/smartshop/api/cart/remove/${productId}`,
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
       );
       fetchCart();
     } catch (error) {
