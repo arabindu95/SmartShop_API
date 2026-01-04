@@ -118,6 +118,8 @@ const Header = () => {
         <div className="flex-3 relative md:block mt-4">
           <input
             type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="Search Products...."
             className="w-full h-10 pl-8 rounded-lg border border-gray-600 focus:border-2 focus:border-white outline-none  text-white"
           />
