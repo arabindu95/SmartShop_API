@@ -38,7 +38,7 @@ try {
 }
 
 app.get("/", (req, res) => {
-  res.send("successfully created server by Arabindu");
+  res.send("successfully created smartShoop server by Arabindu");
 });
 
 app.use("/smartshop/api/product", productRoute);
