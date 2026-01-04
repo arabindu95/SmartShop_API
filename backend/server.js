@@ -13,6 +13,9 @@ import orderRoute from "./routes/order.route.js";
 const app = express();
 dotenv.config();
 
+//cross platform cookie seend
+app.set("trust proxy", 1);
+
 //cors
 app.use(
   cors({
