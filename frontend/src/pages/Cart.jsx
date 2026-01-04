@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BACKEND_URI } from "../config";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -37,7 +38,7 @@ const Cart = () => {
   //remove from cart
   const removeFromCart = async (productId) => {
     try {
-      await axios.delete(
+      const response = await axios.delete(
         `${BACKEND_URI}/smartshop/api/cart/remove/${productId}`,
         {
           headers: {
@@ -47,6 +48,7 @@ const Cart = () => {
         }
       );
       fetchCart();
+      toast.success(response.data.message);
     } catch (error) {
       console.log(error, "error in remove Item from cart");
     }
@@ -55,7 +57,7 @@ const Cart = () => {
   //Increament Quantity
   const increamntQuantity = async (productId) => {
     try {
-      await axios.post(
+      const response = await axios.post(
         `${BACKEND_URI}/smartshop/api/cart/add`,
         { productId, quantity: 1 },
         {
@@ -66,6 +68,7 @@ const Cart = () => {
         }
       );
       fetchCart();
+      toast.success(response.data.message);
     } catch (error) {
       console.log(error, "error in increamnet Quantity");
     }
@@ -74,7 +77,7 @@ const Cart = () => {
   //Decrement Quantity
   const decrementQuantuty = async (productId) => {
     try {
-      await axios.delete(
+      const response = await axios.delete(
         `${BACKEND_URI}/smartshop/api/cart/remove/${productId}`,
         {
           headers: {
@@ -84,6 +87,7 @@ const Cart = () => {
         }
       );
       fetchCart();
+      toast.success(response.data.message);
     } catch (error) {
       console.log(error, "error in decrement");
     }
@@ -113,39 +117,39 @@ const Cart = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-6 ">
           <div className="col-span-4">
-            <div className="grid mx-4 mt-4 gap-6 p-4">
+            <div className="grid mx-4 mt-4 gap-6 p-4 ">
               {cartItems.map((item) => (
                 <>
                   <div
                     key={item._id}
-                    className="bg-slate-800 flex flex-col gap-8 p-6 border border-slate-700 rounded-2xl"
+                    className="bg-slate-800 flex flex-col gap-8 p-2 border border-slate-700 rounded-2xl "
                   >
-                    <div className="flex gap-12 ">
+                    <div className="flex flex-col sm:flex-row gap-1 md:gap-4 sm:gap-12">
                       <div className="flex  items-center">
-                        <div className="flex items-center  w-36 h-30 contain-content border rounded-2xl">
+                        <div className="flex items-center  w-full sm:w-36 h-32 justify-center contain-content border rounded-2xl">
                           <img src={item.product.image.url} alt="" />
                         </div>
                       </div>
-                      <div className="w-full">
+                      <div className="w-full ">
                         <div className="flex flex-col gap-2">
-                          <p className="text-xl font-semibold">
+                          <p className="text-lg md:text-xl font-semibold">
                             {item.product.title}
                           </p>
 
-                          <p className="text-xl text-teal-500 font-bold">
+                          <p className="text-sm md:text-xl text-teal-500 font-bold">
                             {" "}
                             ₹ {item.product.price}
                           </p>
                         </div>
-                        <div className="flex justify-between mt-4">
+                        <div className="flex justify-between mt-1 md:mt-4">
                           <div className="flex gap-10 mt-2 items-center">
-                            <div className="p-2 border border-slate-700 rounded-lg hover:bg-slate-900 duration-200 cursor-pointer">
+                            <div className="p-2 border border-slate-700 rounded-lg hover:bg-slate-900 duration-200 cursor-pointer text-xs md:text-lg">
                               <FiMinus
                                 onClick={() => removeFromCart(item.product._id)}
                               />
                             </div>
                             <p>{item.quantity}</p>
-                            <div className="p-2 border border-slate-700 rounded-lg hover:bg-slate-900 duration-200 cursor-pointer">
+                            <div className="p-2 border border-slate-700 rounded-lg hover:bg-slate-900 duration-200 cursor-pointer text-xs md:text-lg">
                               <FiPlus
                                 onClick={() =>
                                   increamntQuantity(item.product._id)
@@ -163,7 +167,7 @@ const Cart = () => {
                     </div>
 
                     <div>
-                      <div className="h-[1px] bg-slate-700 "></div>
+                      <div className="h-[1px] bg-slate-700"></div>
                       <div className="flex justify-between pt-2">
                         <h2>Subtotal:</h2>
                         <h2 className="text-xl font-semibold">

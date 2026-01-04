@@ -10,6 +10,7 @@ import { GiCondorEmblem } from "react-icons/gi";
 import axios from "axios";
 import { MyContext } from "./../context/createContext";
 import { BACKEND_URI } from "../config";
+import toast from "react-hot-toast";
 
 export const Auth = () => {
   const [mode, setMode] = useState("login");
@@ -35,9 +36,12 @@ export const Auth = () => {
       const token = response.data.token;
       localStorage.setItem("token", token);
 
+      toast.success(response.data.message);
+
       navigate("/products");
       SetIsLoggedin(true);
     } catch (error) {
+      toast.error(error.response.data.errors);
       console.log(error);
     }
   };
@@ -56,9 +60,10 @@ export const Auth = () => {
           },
         }
       );
-      console.log("signup data =>", response.data);
+      toast.success(response.data.message);
       navigate("/products");
     } catch (error) {
+      toast.error(error.response.data.errors);
       console.log(error?.response.data || error.message);
     }
   };
@@ -75,6 +80,7 @@ export const Auth = () => {
         console.log(result.data.message);
       }
       SetIsLoggedin(false);
+      toast.success(result.data.message);
     } catch (error) {
       console.log(error);
     }

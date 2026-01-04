@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { FaRegUser } from "react-icons/fa6";
 import { IoLocationSharp } from "react-icons/io5";
 import { BACKEND_URI } from "../config";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 const CheackOut = () => {
   const [address, setAddress] = useState({
     fullname: "",
@@ -17,6 +19,7 @@ const CheackOut = () => {
 
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const navigate = useNavigate();
 
   //fetchCart items
   const fetchCart = async () => {
@@ -51,7 +54,7 @@ const CheackOut = () => {
   const placeOrder = async () => {
     try {
       if (!address.fullname || !address.phone || !address.address) {
-        alert("all fields are mandotory");
+        toast.error("all fields are mandotory");
         return;
       }
       const res = await axios.post(
@@ -61,9 +64,13 @@ const CheackOut = () => {
           items: cartItems,
           totalAmount: totalTaxAmount,
         },
-        { withCredentials: true }
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          withCredentials: true,
+        }
       );
-      console.log(res.data);
+      toast.success(res.data.message);
+      navigate("/products");
     } catch (error) {
       console.log(error, "error in placeOrder function");
     }

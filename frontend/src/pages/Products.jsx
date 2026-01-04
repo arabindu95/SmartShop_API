@@ -5,6 +5,7 @@ import { LuShoppingCart } from "react-icons/lu";
 import axios from "axios";
 import { MyContext } from "../context/createContext";
 import { BACKEND_URI } from "../config";
+import toast from "react-hot-toast";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const { search } = useContext(MyContext);
@@ -29,7 +30,7 @@ const Products = () => {
   //addToCart
   const addToCart = async (productId) => {
     try {
-      await axios.post(
+      const response = await axios.post(
         `${BACKEND_URI}/smartshop/api/cart/add`,
         {
           productId: productId,
@@ -42,6 +43,7 @@ const Products = () => {
           withCredentials: true,
         }
       );
+      toast.success(response.data.message);
     } catch (error) {
       console.log(error);
       alert("Please login first");
