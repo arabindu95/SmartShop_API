@@ -22,6 +22,9 @@ const CheackOut = () => {
   const fetchCart = async () => {
     try {
       const res = await axios.get(`${BACKEND_URI}/smartshop/api/cart/getcart`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         withCredentials: true,
       });
       setCartItems(res.data.cart.items || []);
