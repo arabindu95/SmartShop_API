@@ -52,6 +52,12 @@ export const getCart = async (req, res) => {
       "items.product",
       "title price image"
     );
+    if (!cart) {
+      return res.status(200).json({
+        cart: { items: [] },
+        totalAmount: 0,
+      });
+    }
 
     let totalAmount = 0;
 
