@@ -28,7 +28,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center mt-16">
+    <div className="min-h-screen flex flex-col justify-center mt-16 bg-red-400">
       {/* ----------------Hero Section---------------- */}
       <section className="relative overflow-x-hidden pb-16">
         <div className="">
