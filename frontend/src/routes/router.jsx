@@ -10,7 +10,6 @@ import AdminAuth from "../pages/admin/AdminAuth";
 import AdminHome from "../pages/admin/AdminHome";
 import AdminUploadProducts from "../pages/admin/AdminUploadProducts";
 import CheackOut from "../pages/CheackOut";
-import Cheacking from "../pages/cheacking";
 
 export const router = createBrowserRouter([
   //user Router
@@ -41,10 +40,6 @@ export const router = createBrowserRouter([
       {
         path: "/cheackout",
         element: <CheackOut />,
-      },
-      {
-        path: "/cheacking",
-        element: <Cheacking />,
       },
     ],
   },
