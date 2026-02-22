@@ -37,7 +37,7 @@ const Home = () => {
             <div className=" bg-teal-800 flex items-center justify-center w-72 p-2 rounded-full gap-2 ">
               <GiCondorEmblem className="text-2xl" />
               <p className="text-blue-200 text-sm">
-                AI-Powered Shopping Experience
+                AI-Powered Shopping Experience Arabindu
               </p>
             </div>
           </div>
