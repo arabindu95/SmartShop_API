@@ -14,7 +14,7 @@ import { GiCondorEmblem } from "react-icons/gi";
 const Header = () => {
   const { theme, toggleTheme } = useContext(MyContext);
   const [open, setOpen] = useState(false);
-  const { search, setSearch } = useContext(MyContext);
+  const { search, setSearch, cartCount } = useContext(MyContext);
 
   return (
     <div className="sticky top-0 z-50 backdrop-blur-2xl border-b border-slate-700  ">
@@ -79,9 +79,14 @@ const Header = () => {
               </button>
               <Link
                 to="/cart"
-                className="p-2 rounded-lg hover:bg-slate-800 duration-300"
+                className="relative p-2 rounded-lg hover:bg-slate-800 duration-300 items-center"
               >
-                <LuShoppingCart />
+                <LuShoppingCart className="" />
+                {cartCount > 0 && (
+                  <span className=" absolute -top-1 -right-1 bg-green-500 text-white text-xs px-2 rounded-full">
+                    {cartCount}
+                  </span>
+                )}
               </Link>
             </div>
           </div>
@@ -171,7 +176,12 @@ const Header = () => {
             onClick={() => setOpen(false)}
             className="mr-6 p-1 text-xl rounded-lg hover:bg-slate-700 duration-300"
           >
-            <LuShoppingCart />
+            <LuShoppingCart className=" absolute" />
+            {cartCount > 0 && (
+              <span className="relative -top-5 -right-1 bg-green-500 text-white text-xs px-2 rounded-full">
+                {cartCount}
+              </span>
+            )}
           </Link>
         </div>
       </div>

@@ -5,6 +5,7 @@ export const MyContextProvider = ({ children }) => {
   const [theme, setTheme] = useState("dark");
   const [isLoggedin, SetIsLoggedin] = useState(false);
   const [search, setSearch] = useState("");
+  const [cartCount, setCartCount] = useState(0);
 
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
@@ -18,6 +19,8 @@ export const MyContextProvider = ({ children }) => {
     SetIsLoggedin,
     search,
     setSearch,
+    cartCount,
+    setCartCount,
   };
 
   return <MyContext.Provider value={value}> {children} </MyContext.Provider>;

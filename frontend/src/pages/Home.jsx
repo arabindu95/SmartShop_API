@@ -20,7 +20,7 @@ const Home = () => {
     const fetchProducts = async () => {
       const results = await axios.get(
         `${BACKEND_URI}/smartshop/api/product/getproducts`,
-        { withCredentials: true }
+        { withCredentials: true },
       );
       setproducts(results.data.products);
     };
@@ -159,23 +159,23 @@ const Home = () => {
               Most popular products loved by our customers
             </p>
           </div>
-          <div className="flex  justify-center items-center hidden md:block">
+          <div className="  justify-center items-center hidden md:block">
             <Link className="flex items-center gap-2 shadow-md shadow-gray-950 p-2 rounded-full hover:bg-gray-950 ">
-              <p>View All</p>
+              <Link to={"/products"}>View All</Link>
               <FaArrowRight />
             </Link>
           </div>
         </div>
 
         {/* Products */}
-        <div className="grid grid-cols-1 mx-4  sm:grid-cols-2 sm:mx-0 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 mx-4  sm:grid-cols-4 sm:mx-0 lg:grid-cols-6 gap-6">
           {products.map((product) => (
             <div
               key={product._id}
-              className="bg-slate-700 rounded-xl overflow-hidden flex flex-col"
+              className="bg-slate-700 rounded-xl overflow-hidden flex flex-col items-center"
             >
               {/* Image */}
-              <div className="w-full h-96">
+              <div className="w-24 h-26 ">
                 <img
                   src={product.image.url}
                   alt={product.title}
@@ -184,17 +184,16 @@ const Home = () => {
               </div>
 
               {/* Product Info */}
-              <div className="p-4 flex flex-col gap-2">
+              <div className="underline flex flex-col gap-2">
                 <p className="text-teal-400">{/* category or empty */}</p>
-                <h2 className="font-bold text-xl">{product.title}</h2>
-                <p>RATINGS</p>
+                <h2 className="font-semibold text-md">{product.title}</h2>
               </div>
 
               {/* Price + Cart */}
-              <div className="flex justify-between items-center p-4 border-t border-slate-600">
-                <p className="font-semibold">₹{product.price}</p>
-                <Link className="bg-teal-500 p-2 rounded-xl hover:bg-teal-600">
-                  <LuShoppingCart className="text-2xl text-black" />
+              <div className="flex justify-between gap-8 items-center pb-2 ">
+                <p className="text-teal-500">₹{product.price}/-</p>
+                <Link className="bg-teal-500 p-2 rounded-md hover:bg-teal-600 mt-2">
+                  <LuShoppingCart className="text-sm text-black" />
                 </Link>
               </div>
             </div>

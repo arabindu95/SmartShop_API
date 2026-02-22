@@ -8,10 +8,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { BACKEND_URI } from "../config";
 import toast from "react-hot-toast";
+import { useContext } from "react";
+import { MyContext } from "../context/createContext";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const { setCartCount } = useContext(MyContext);
   const navigate = useNavigate();
 
   const fetchCart = async () => {
@@ -22,10 +25,13 @@ const Cart = () => {
         },
         withCredentials: true,
       });
-      console.log(res.data);
-      setCartItems(res.data.cart.items || []);
+
+      const items = res.data.cart.items || [];
+      setCartItems(items);
       setTotalAmount(res.data.totalAmount);
-      console.log(res.data.cart.items);
+      // 🔥 cartCount calculate here
+      const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+      setCartCount(totalItems);
     } catch (error) {
       console.log(error, "error in FetchCart");
     }
@@ -36,7 +42,7 @@ const Cart = () => {
   }, []);
 
   //remove from cart
-  const removeFromCart = async (productId) => {
+  const removeFromCart = async (productId, quantity = 1) => {
     try {
       const response = await axios.delete(
         `${BACKEND_URI}/smartshop/api/cart/remove/${productId}`,
@@ -47,8 +53,10 @@ const Cart = () => {
           withCredentials: true,
         }
       );
-      fetchCart();
-      toast.success(response.data.message);
+      if (response.data.success) {
+        fetchCart();
+        toast.success(response.data.message);
+      }
     } catch (error) {
       console.log(error, "error in remove Item from cart");
     }
@@ -75,10 +83,15 @@ const Cart = () => {
   };
 
   //Decrement Quantity
-  const decrementQuantuty = async (productId) => {
+  const decrementQuantuty = async (productId, quantity) => {
     try {
-      const response = await axios.delete(
-        `${BACKEND_URI}/smartshop/api/cart/remove/${productId}`,
+      if (quantity === 1) {
+        await removeFromCart(productId);
+        return;
+      }
+      const response = await axios.post(
+        `${BACKEND_URI}/smartshop/api/cart/decrement`,
+        { productId },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -145,7 +158,12 @@ const Cart = () => {
                           <div className="flex gap-10 mt-2 items-center">
                             <div className="p-2 border border-slate-700 rounded-lg hover:bg-slate-900 duration-200 cursor-pointer text-xs md:text-lg">
                               <FiMinus
-                                onClick={() => removeFromCart(item.product._id)}
+                                onClick={() =>
+                                  decrementQuantuty(
+                                    item.product._id,
+                                    item.quantity
+                                  )
+                                }
                               />
                             </div>
                             <p>{item.quantity}</p>

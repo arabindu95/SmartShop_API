@@ -105,7 +105,6 @@ export const deleteProducts = async (req, res) => {
         message: "Product not found",
       });
     }
-
     res
       .status(200)
       .json({ success: true, message: "product deleted successfully" });

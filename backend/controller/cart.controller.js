@@ -52,6 +52,7 @@ export const getCart = async (req, res) => {
       "items.product",
       "title price image"
     );
+    console.log("CART", cart);
     if (!cart) {
       return res.status(200).json({
         cart: { items: [] },
@@ -60,6 +61,8 @@ export const getCart = async (req, res) => {
     }
 
     let totalAmount = 0;
+    cart.items = cart.items.filter((item) => item.product !== null);
+    await cart.save();
 
     cart.items.forEach((item) => {
       totalAmount += item.product.price * item.quantity;
@@ -69,6 +72,48 @@ export const getCart = async (req, res) => {
     console.log("CART:", cart);
   } catch (error) {
     res.status(500).json({ message: "something went wrong in getCart", error });
+  }
+};
+
+//********************** Decrement quantity Cart *****************
+export const decrementCartItem = async (req, res) => {
+  try {
+    const { productId } = req.body;
+    const userId = req.userId;
+
+    const cart = await Cart.findOne({ user: userId });
+
+    if (!cart) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Cart not found" });
+    }
+
+    const item = cart.items.find((i) => i.product.toString() === productId);
+
+    if (!item) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Item not found" });
+    }
+
+    // REAL DECREMENT
+    item.quantity -= 1;
+
+    if (item.quantity <= 0) {
+      cart.items = cart.items.filter((i) => i.product.toString() !== productId);
+    }
+
+    await cart.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Quantity decreased",
+      cart,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
@@ -83,6 +128,7 @@ export const removeFromCart = async (req, res) => {
     cart.items = cart.items.filter(
       (item) => item.product.toString() !== productId
     );
+
     await cart.save();
     res.status(200).json({
       success: true,
